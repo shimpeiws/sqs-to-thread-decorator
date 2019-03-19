@@ -8,6 +8,7 @@ import time
 #     aws_secret_access_key="AWS_ACCESS_KEY_ID",
 #     region_name="REGION_NAME",
 #     endpoint_url="ENDPOINT_URL",
+#     polling_interval=1
 # )
 app = QueueForThread()
 
@@ -23,7 +24,7 @@ app = QueueForThread()
 def execute(sqs_message="", **options):
     print('!!!main.py From Execute!!!')
     print('!!!sqs_message!!!', sqs_message)
-    time.sleep(10)
+    time.sleep(1)
 
 
 if __name__ == '__main__':
