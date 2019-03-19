@@ -7,6 +7,10 @@ class QueueForThread:
     def __init__(self, **options):
         self.functions = {}
         self.polling_interval = options.get('polling_interval', 3)
+        self.aws_access_key_id = options.get('aws_access_key_id', '')
+        self.aws_secret_access_key = options.get('aws_secret_access_key', '')
+        self.region_name = options.get('region_name', '')
+        self.endpoint_url = options.get('endpoint_url', '')
 
     def add_function(self, queue_name, function, **options):
         parallel_count = options.get('parallel_count', 1)
@@ -24,7 +28,12 @@ class QueueForThread:
     def execute(self, queue_name):
         values = self.functions[queue_name]
         while True:
-            client = Sqs()
+            client = Sqs(
+              aws_access_key_id=self.aws_access_key_id,
+              aws_secret_access_key=self.aws_secret_access_key,
+              region_name=self.region_name,
+              endpoint_url=self.endpoint_url
+            )
             message = client.receive_message(queue_name)
             if message is not None:
                 values['function'](sqs_message=message)
