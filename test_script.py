@@ -5,6 +5,8 @@ client = Sqs()
 
 queue_name = 'test'
 
+queue = client.create_queue(queue_name)
+
 queue = client.fetch_queue(queue_name)
 
 for i in range(50):
