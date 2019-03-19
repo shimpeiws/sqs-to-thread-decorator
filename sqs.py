@@ -23,6 +23,11 @@ class Sqs():
                                   endpoint_url=endpoint_url,
                                   )
 
+    def create_queue(self, queue_name):
+        return self.sqs.create_queue(
+          QueueName=queue_name
+        )
+
     def fetch_queue(self, queue_name):
         return self.sqs.get_queue_by_name(QueueName=queue_name)
 
