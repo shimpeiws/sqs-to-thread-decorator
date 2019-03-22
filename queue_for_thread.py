@@ -41,13 +41,13 @@ class QueueForThread:
 
     def execute(self, queue_name):
         values = self.functions[queue_name]
-        while True:
-            client = Sqs(
+        client = Sqs(
               aws_access_key_id=self.aws_access_key_id,
               aws_secret_access_key=self.aws_secret_access_key,
               region_name=self.region_name,
               endpoint_url=self.endpoint_url
             )
+        while True:
             message = client.receive_message(queue_name)
             if message is not None:
                 self.logger.info('Got message [%s] from Queue Name = [%s]', message, queue_name)
