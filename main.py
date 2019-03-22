@@ -1,5 +1,6 @@
 from queue_for_thread import QueueForThread
 import time
+import random
 
 # Init QueueForThread
 #
@@ -24,6 +25,8 @@ app = QueueForThread()
 def execute(sqs_message="", **options):
     print('!!!main.py From Execute!!!')
     print('!!!sqs_message!!!', sqs_message)
+    if random.randrange(10) % 5 == 0:
+        raise Exception('some error here')
     time.sleep(1)
 
 
