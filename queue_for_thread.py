@@ -5,6 +5,9 @@ import logging
 from logging import getLogger, StreamHandler, Formatter
 
 class QueueForThread:
+    class SqsException(Exception):
+        pass
+
     def __init__(self, **options):
         self.functions = {}
         self.log_level = options.get('log_level', logging.INFO)
@@ -41,20 +44,28 @@ class QueueForThread:
 
     def execute(self, queue_name):
         values = self.functions[queue_name]
-        client = Sqs(
-              aws_access_key_id=self.aws_access_key_id,
-              aws_secret_access_key=self.aws_secret_access_key,
-              region_name=self.region_name,
-              endpoint_url=self.endpoint_url
-            )
+        try:
+          client = Sqs(
+                aws_access_key_id=self.aws_access_key_id,
+                aws_secret_access_key=self.aws_secret_access_key,
+                region_name=self.region_name,
+                endpoint_url=self.endpoint_url
+              )
+        except Exception as err:
+            self.logger.error('Error when init SQS client')
+            raise self.SqsException(err)
         while True:
-            message = client.receive_message(queue_name)
+            try:
+              message = client.receive_message(queue_name)
+            except Exception as err:
+                self.logger.error('Error when receive message from SQS Queue = [%s]', queue_name)
+                raise self.SqsException(err)
             if message is not None:
                 self.logger.info('Got message [%s] from Queue Name = [%s]', message, queue_name)
                 try:
                   values['function'](sqs_message=message)
                 except Exception as err:
-                  logging.exception('Error in decorated function')
+                  self.logger.exception('Error in decorated function')
             time.sleep(self.polling_interval)
 
     def start(self):
