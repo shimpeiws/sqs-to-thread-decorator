@@ -12,7 +12,6 @@ setup(
     author='Shimpei Takamatsu',
     author_email='shimpeiws@gmail.com',
     url='https://github.com/kennethreitz/samplemod',
+    install_requires=['boto3'],
     license='MIT',
-    dependency_links=[
-        'git+ssh://git@github.com:shimpeiws/sqs-to-thread-decorator.git#egg=queue_for_thread'],
 )
