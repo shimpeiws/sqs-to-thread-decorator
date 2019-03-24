@@ -14,4 +14,5 @@ setup(
     url='https://github.com/kennethreitz/samplemod',
     install_requires=['boto3'],
     license='MIT',
+    packages=['queue_for_thread'],
 )
