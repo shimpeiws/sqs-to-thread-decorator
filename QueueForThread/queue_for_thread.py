@@ -1,8 +1,9 @@
 import time
 from concurrent.futures import ProcessPoolExecutor
-from sqs import Sqs
+from .sqs import Sqs
 import logging
 from logging import getLogger, StreamHandler, Formatter
+
 
 class QueueForThread:
     class SqsException(Exception):
@@ -23,7 +24,8 @@ class QueueForThread:
         logger.setLevel(self.log_level)
         stream_handler = StreamHandler()
         stream_handler.setLevel(self.log_level)
-        handler_format = Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler_format = Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         stream_handler.setFormatter(handler_format)
         logger.addHandler(stream_handler)
         return logger
@@ -37,7 +39,8 @@ class QueueForThread:
 
     def listen(self, queue_name, **options):
         def decorator(function):
-            self.logger.info('Start listen queue name = [%s] function name = [%s]', queue_name, function.__name__)
+            self.logger.info(
+                'Start listen queue name = [%s] function name = [%s]', queue_name, function.__name__)
             self.add_function(queue_name, function, **options)
             return function
         return decorator
@@ -45,27 +48,29 @@ class QueueForThread:
     def execute(self, queue_name):
         values = self.functions[queue_name]
         try:
-          client = Sqs(
+            client = Sqs(
                 aws_access_key_id=self.aws_access_key_id,
                 aws_secret_access_key=self.aws_secret_access_key,
                 region_name=self.region_name,
                 endpoint_url=self.endpoint_url
-              )
+            )
         except Exception as err:
             self.logger.error('Error when init SQS client')
             raise self.SqsException(err)
         while True:
             try:
-              message = client.receive_message(queue_name)
+                message = client.receive_message(queue_name)
             except Exception as err:
-                self.logger.error('Error when receive message from SQS Queue = [%s]', queue_name)
+                self.logger.error(
+                    'Error when receive message from SQS Queue = [%s]', queue_name)
                 raise self.SqsException(err)
             if message is not None:
-                self.logger.info('Got message [%s] from Queue Name = [%s]', message, queue_name)
+                self.logger.info(
+                    'Got message [%s] from Queue Name = [%s]', message, queue_name)
                 try:
-                  values['function'](sqs_message=message)
+                    values['function'](sqs_message=message)
                 except Exception as err:
-                  self.logger.exception('Error in decorated function')
+                    self.logger.exception('Error in decorated function')
             time.sleep(self.polling_interval)
 
     def start(self):
@@ -74,7 +79,8 @@ class QueueForThread:
             values = self.functions[key]
             parallel_count = values['parallel_count']
             with ProcessPoolExecutor(max_workers=parallel_count) as executor:
-                self.logger.info('Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
+                self.logger.info(
+                    'Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
                 queue_name_arr = [
                     key for i in range(parallel_count)]
                 executor.map(self.execute, queue_name_arr)
