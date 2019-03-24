@@ -1,5 +1,11 @@
 ## sqs-to-thread-decorator
 
+### Install
+
+`pip install git+https://github.com/shimpeiws/sqs-to-thread-decorator.git#egg=queue_for_thread`
+
+`pipenv install git+https://github.com/shimpeiws/sqs-to-thread-decorator.git#egg=queue_for_thread`
+
 ### Environment Variables
 
 ```

@@ -1,4 +1,4 @@
-from sqs import Sqs
+from queue_for_thread import Sqs
 import time
 
 client = Sqs()
