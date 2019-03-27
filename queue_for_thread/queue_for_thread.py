@@ -75,14 +75,15 @@ class QueueForThread:
                     'Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
                 key_arr = [
                     key for i in range(parallel_count)]
-                functions = [
+                function_arr = [
                     values['function'] for i in range(parallel_count)]
-                # ex = MethodExecutor(
-                #     values['function'],
-                #     self.logger,
-                #     aws_access_key_id=self.aws_access_key_id,
-                #     aws_secret_access_key=self.aws_secret_access_key,
-                #     region_name=self.region_name,
-                #     endpoint_url=self.endpoint_url
-                # )
-                executor.map(MethodExecutor.execute, key_arr, functions)
+                aws_access_key_id_arr = [
+                    self.aws_access_key_id for i in range(parallel_count)]
+                aws_secret_access_key_arr = [
+                    self.aws_secret_access_key for i in range(parallel_count)]
+                region_name_arr = [
+                    self.region_name for i in range(parallel_count)]
+                endpoint_url_arr = [
+                    self.endpoint_url for i in range(parallel_count)]
+                executor.map(MethodExecutor.execute, key_arr,
+                             function_arr, aws_access_key_id_arr, aws_secret_access_key_arr, region_name_arr, endpoint_url_arr)

@@ -23,11 +23,17 @@ class MethodExecutor:
             raise self.SqsException(err)
 
     @classmethod
-    def execute(self, queue_name, function):
+    def execute(self, queue_name, function, aws_access_key_id, aws_secret_access_key, region_name, endpoint_url):
         while True:
             print('execute')
             print(queue_name)
             print(function.__name__)
+            client = Sqs(
+                aws_access_key_id=options.get('aws_access_key_id', ''),
+                aws_secret_access_key=options.get('aws_secret_access_key', ''),
+                region_name=options.get('region_name', ''),
+                endpoint_url=options.get('endpoint_url', '')
+            )
             # try:
             #     message = self.client.receive_message(queue_name)
             # except Exception as err:
