@@ -38,4 +38,4 @@ class MethodExecutor:
             #         self.function(sqs_message=message)
             #     except Exception as err:
             #         logger.exception('Error in decorated function')
-            time.sleep(self.polling_interval)
+            time.sleep(10)
