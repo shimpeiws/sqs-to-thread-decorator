@@ -13,7 +13,8 @@ class QueueForThread:
     def __init__(self, **options):
         self.functions = {}
         log_level = options.get('log_level', INFO)
-        self.logger = Logger(log_level=log_level)
+        logger = Logger(log_level=log_level)
+        self.logger = logger.logger()
         self.polling_interval = options.get('polling_interval', 3)
         self.aws_access_key_id = options.get('aws_access_key_id', '')
         self.aws_secret_access_key = options.get('aws_secret_access_key', '')

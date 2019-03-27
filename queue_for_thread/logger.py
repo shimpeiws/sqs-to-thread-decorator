@@ -12,4 +12,7 @@ class Logger:
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         stream_handler.setFormatter(handler_format)
         logger.addHandler(stream_handler)
-        return logger
+        self.logger = logger
+
+    def logger():
+        return self.logger
