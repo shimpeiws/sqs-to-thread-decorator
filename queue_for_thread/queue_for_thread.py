@@ -1,6 +1,7 @@
 import time
 from concurrent.futures import ProcessPoolExecutor
 from .sqs import Sqs
+from .method_executor import MethodExecutor
 import logging
 from logging import getLogger, StreamHandler, Formatter
 
@@ -55,24 +56,14 @@ class QueueForThread:
             return function
         return decorator
 
-    def execute(self, queue_name):
-        values = self.functions[queue_name]
-
-        while True:
-            try:
-                message = self.client.receive_message(queue_name)
-            except Exception as err:
-                self.logger.error(
-                    'Error when receive message from SQS Queue = [%s]', queue_name)
-                raise self.SqsException(err)
-            if message is not None:
-                self.logger.info(
-                    'Got message [%s] from Queue Name = [%s]', message, queue_name)
-                try:
-                    values['function'](sqs_message=message)
-                except Exception as err:
-                    self.logger.exception('Error in decorated function')
-            time.sleep(self.polling_interval)
+    def options(self):
+        return {
+            'polling_interval': self.polling_interval,
+            'aws_access_key_id': self.aws_access_key_id,
+            'aws_secret_access_key': self.aws_secret_access_key,
+            'region_name': self.region_name,
+            'endpoint_url': self.endpoint_url
+        }
 
     def start(self):
         self.logger.info('QueueForThread Start!!!')
@@ -82,6 +73,17 @@ class QueueForThread:
             with ProcessPoolExecutor(max_workers=parallel_count) as executor:
                 self.logger.info(
                     'Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
-                queue_name_arr = [
+                function_arr = [
+                    values['function'] for i in range(parallel_count)]
+                key_arr = [
                     key for i in range(parallel_count)]
-                executor.map(self.execute, queue_name_arr)
+                ]
+                logger_arr = [
+                  self.logger for i in range(parallel_count)]
+                ]
+                option_arr = [
+                  self.options() for i in range(parallel_count)]
+                ]
+
+                executor.map(MethodExecutor.execute, zip(
+                  function_arr, key_arr, logger_arr, **option_arr))
