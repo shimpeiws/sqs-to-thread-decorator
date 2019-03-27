@@ -12,8 +12,8 @@ class QueueForThread:
 
     def __init__(self, **options):
         self.functions = {}
-        log_level = options.get('log_level', INFO)
-        logger = Logger(log_level=log_level)
+        self.log_level = options.get('log_level', INFO)
+        logger = Logger(log_level=self.log_level)
         self.logger = logger.get_logger()
         self.polling_interval = options.get('polling_interval', 3)
         self.aws_access_key_id = options.get('aws_access_key_id', '')
@@ -77,5 +77,9 @@ class QueueForThread:
                     self.endpoint_url for i in range(parallel_count)]
                 polling_interval_arr = [
                     self.polling_interval for i in range(parallel_count)]
+                log_level_arr = [
+                    self.log_level for i in range(parallel_count)]
                 executor.map(MethodExecutor.execute, key_arr,
-                             function_arr, aws_access_key_id_arr, aws_secret_access_key_arr, region_name_arr, endpoint_url_arr, polling_interval_arr)
+                             function_arr, aws_access_key_id_arr,
+                             aws_secret_access_key_arr, region_name_arr,
+                             endpoint_url_arr, polling_interval_arr, log_level_arr)
