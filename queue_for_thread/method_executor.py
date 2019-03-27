@@ -11,12 +11,12 @@ class MethodExecutor:
         self.logger = logger
         self.polling_interval = options.get('polling_interval', 3)
         try:
-            self.client = Sqs(
-                aws_access_key_id=options.get('aws_access_key_id', ''),
-                aws_secret_access_key=options.get('aws_secret_access_key', ''),
-                region_name=options.get('region_name', ''),
-                endpoint_url=options.get('endpoint_url', '')
-            )
+            # self.client = Sqs(
+            #     aws_access_key_id=options.get('aws_access_key_id', ''),
+            #     aws_secret_access_key=options.get('aws_secret_access_key', ''),
+            #     region_name=options.get('region_name', ''),
+            #     endpoint_url=options.get('endpoint_url', '')
+            # )
         except Exception as err:
             self.logger.error('Error when init SQS client')
             raise self.SqsException(err)
