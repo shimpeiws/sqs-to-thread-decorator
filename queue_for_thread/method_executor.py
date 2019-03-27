@@ -7,9 +7,9 @@ class MethodExecutor:
         pass
 
     def __init__(self, function, logger, **options):
-        self.function = function
-        self.logger = logger
-        self.polling_interval = options.get('polling_interval', 3)
+        # self.function = function
+        # self.logger = logger
+        # self.polling_interval = options.get('polling_interval', 3)
         try:
             print('init')
             # self.client = Sqs(
@@ -19,7 +19,7 @@ class MethodExecutor:
             #     endpoint_url=options.get('endpoint_url', '')
             # )
         except Exception as err:
-            self.logger.error('Error when init SQS client')
+            # self.logger.error('Error when init SQS client')
             raise self.SqsException(err)
 
     def execute(self, queue_name):
