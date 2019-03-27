@@ -7,9 +7,10 @@ class MethodExecutor:
         pass
 
     @classmethod
-    def execute2(self, key):
+    def execute2(self, key, key2):
         print("execute2")
         print(key)
+        print(key2)
 
     @classmethod
     def execute(self, function, queue_name, logger, **options):
