@@ -71,6 +71,7 @@ class QueueForThread:
                 try:
                     values['function'](sqs_message=message)
                 except Exception as err:
+                    print("ERROR")
                     # self.logger.exception('Error in decorated function')
             time.sleep(self.polling_interval)
 
