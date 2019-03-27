@@ -62,16 +62,16 @@ class QueueForThread:
             try:
                 message = self.client.receive_message(queue_name)
             except Exception as err:
-                self.logger.error(
-                    'Error when receive message from SQS Queue = [%s]', queue_name)
+                # self.logger.error(
+                #     'Error when receive message from SQS Queue = [%s]', queue_name)
                 raise self.SqsException(err)
             if message is not None:
-                self.logger.info(
-                    'Got message [%s] from Queue Name = [%s]', message, queue_name)
+                # self.logger.info(
+                #     'Got message [%s] from Queue Name = [%s]', message, queue_name)
                 try:
                     values['function'](sqs_message=message)
                 except Exception as err:
-                    self.logger.exception('Error in decorated function')
+                    # self.logger.exception('Error in decorated function')
             time.sleep(self.polling_interval)
 
     def start(self):
