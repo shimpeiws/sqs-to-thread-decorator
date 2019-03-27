@@ -22,6 +22,7 @@ class MethodExecutor:
             # self.logger.error('Error when init SQS client')
             raise self.SqsException(err)
 
+    @classmethod
     def execute(self, queue_name):
         while True:
             print('execute')
