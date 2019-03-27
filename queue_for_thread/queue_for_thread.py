@@ -85,5 +85,5 @@ class QueueForThread:
                 #     self.logger for i in range(parallel_count)]
                 # option_arr = [
                 #     self.options() for i in range(parallel_count)]
-
+                execute2()
                 executor.map(execute2)
