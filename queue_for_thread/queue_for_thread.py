@@ -1,7 +1,7 @@
 import time
 from concurrent.futures import ProcessPoolExecutor
 from .sqs import Sqs
-import .logger import Logger
+from .logger import Logger
 from .method_executor import MethodExecutor
 from logging import INFO
 
