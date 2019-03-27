@@ -11,6 +11,7 @@ class MethodExecutor:
         self.logger = logger
         self.polling_interval = options.get('polling_interval', 3)
         try:
+            print('init')
             # self.client = Sqs(
             #     aws_access_key_id=options.get('aws_access_key_id', ''),
             #     aws_secret_access_key=options.get('aws_secret_access_key', ''),
