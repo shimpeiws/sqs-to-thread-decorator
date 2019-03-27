@@ -14,5 +14,5 @@ class Logger:
         logger.addHandler(stream_handler)
         self.logger = logger
 
-    def logger():
+    def logger(self):
         return self.logger
