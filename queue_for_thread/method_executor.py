@@ -28,7 +28,7 @@ class MethodExecutor:
                 # self.logger.info(
                     # 'Got message [%s] from Queue Name = [%s]', message, queue_name)
                 try:
-                    self.function(sqs_message=message)
+                    function(sqs_message=message)
                 except Exception as err:
                     print('exepction')
                     # logger.exception('Error in decorated function')
