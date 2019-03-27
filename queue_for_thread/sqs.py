@@ -8,13 +8,13 @@ class Sqs():
 
     def __init__(self, **options):
         self.lock = Lock()
-        aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID'] if os.environ['AWS_ACCESS_KEY_ID'] is not None else options.get(
+        aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID'] if 'AWS_ACCESS_KEY_ID' in os.environ.keys() else options.get(
             'aws_access_key_id', '')
-        aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY'] if os.environ['AWS_SECRET_ACCESS_KEY'] is not None else options.get(
+        aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY'] if 'AWS_SECRET_ACCESS_KEY' in os.environ.keys() else options.get(
             'aws_secret_access_key', '')
-        region_name = os.environ['AWS_REGION_NAME'] if os.environ['AWS_REGION_NAME'] is not None else options.get(
+        region_name = os.environ['AWS_REGION_NAME'] if 'AWS_REGION_NAME' in os.environ.keys() else options.get(
             'region_name', '')
-        endpoint_url = os.environ['SQS_URL'] if os.environ['SQS_URL'] is not None else options.get(
+        endpoint_url = os.environ['SQS_URL'] if 'SQS_URL' in os.environ.keys() else options.get(
             'endpoint_url', '')
         self.sqs = boto3.resource('sqs',
                                   aws_access_key_id=aws_access_key_id,
