@@ -7,6 +7,10 @@ class MethodExecutor:
         pass
 
     @classmethod
+    def execute2(self):
+        print("execute2")
+
+    @classmethod
     def execute(self, function, queue_name, logger, **options):
         polling_interval = options.get('polling_interval', 3)
         aws_access_key_id = options.get('aws_access_key_id', '')
