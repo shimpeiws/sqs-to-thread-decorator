@@ -2,8 +2,6 @@ import time
 from concurrent.futures import ProcessPoolExecutor
 from .sqs import Sqs
 from .method_executor import MethodExecutor
-import logging
-from logging import getLogger, StreamHandler, Formatter
 
 
 class QueueForThread:
@@ -12,8 +10,8 @@ class QueueForThread:
 
     def __init__(self, **options):
         self.functions = {}
-        self.log_level = options.get('log_level', logging.INFO)
-        self.logger = self.__init_logger()
+        log_level = options.get('log_level', logging.INFO)
+        self.logger = Logger(log_level=log_level)
         self.polling_interval = options.get('polling_interval', 3)
         self.aws_access_key_id = options.get('aws_access_key_id', '')
         self.aws_secret_access_key = options.get('aws_secret_access_key', '')
@@ -29,17 +27,6 @@ class QueueForThread:
         except Exception as err:
             self.logger.error('Error when init SQS client')
             raise self.SqsException(err)
-
-    def __init_logger(self):
-        logger = logging.getLogger(__name__)
-        logger.setLevel(self.log_level)
-        stream_handler = StreamHandler()
-        stream_handler.setLevel(self.log_level)
-        handler_format = Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        stream_handler.setFormatter(handler_format)
-        logger.addHandler(stream_handler)
-        return logger
 
     def add_function(self, queue_name, function, **options):
         parallel_count = options.get('parallel_count', 1)
