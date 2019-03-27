@@ -6,7 +6,6 @@ class MethodExecutor:
     class SqsException(Exception):
         pass
 
-    @classmethod
     def execute2(self, key):
         print("execute2")
         print(key)
