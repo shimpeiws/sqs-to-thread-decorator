@@ -73,13 +73,13 @@ class QueueForThread:
             with ProcessPoolExecutor(max_workers=parallel_count) as executor:
                 self.logger.info(
                     'Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
-                function_arr = [
-                    values['function'] for i in range(parallel_count)]
-                key_arr = [
-                    key for i in range(parallel_count)]
-                logger_arr = [
-                    self.logger for i in range(parallel_count)]
-                option_arr = [
-                    self.options() for i in range(parallel_count)]
+                # function_arr = [
+                #     values['function'] for i in range(parallel_count)]
+                # key_arr = [
+                #     key for i in range(parallel_count)]
+                # logger_arr = [
+                #     self.logger for i in range(parallel_count)]
+                # option_arr = [
+                #     self.options() for i in range(parallel_count)]
 
                 executor.map(MethodExecutor.execute2)
