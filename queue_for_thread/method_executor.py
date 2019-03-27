@@ -29,10 +29,10 @@ class MethodExecutor:
             print(queue_name)
             print(function.__name__)
             client = Sqs(
-                aws_access_key_id=options.get('aws_access_key_id', ''),
-                aws_secret_access_key=options.get('aws_secret_access_key', ''),
-                region_name=options.get('region_name', ''),
-                endpoint_url=options.get('endpoint_url', '')
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                region_name=region_name,
+                endpoint_url=endpoint_url
             )
             # try:
             #     message = self.client.receive_message(queue_name)
