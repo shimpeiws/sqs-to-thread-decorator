@@ -75,8 +75,8 @@ class QueueForThread:
                     'Start Queue = [%s] with Parallel Count = [%d]', key, parallel_count)
                 key_arr = [
                     key for i in range(parallel_count)]
-                key_arr2 = [
-                    key for i in range(parallel_count)]
+                functions = [
+                    values['function'] for i in range(parallel_count)]
                 # ex = MethodExecutor(
                 #     values['function'],
                 #     self.logger,
@@ -85,4 +85,4 @@ class QueueForThread:
                 #     region_name=self.region_name,
                 #     endpoint_url=self.endpoint_url
                 # )
-                executor.map(MethodExecutor.execute, key_arr, key_arr2)
+                executor.map(MethodExecutor.execute, key_arr, functions)

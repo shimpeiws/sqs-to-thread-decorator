@@ -23,11 +23,11 @@ class MethodExecutor:
             raise self.SqsException(err)
 
     @classmethod
-    def execute(self, queue_name, queue_name2):
+    def execute(self, queue_name, function):
         while True:
             print('execute')
             print(queue_name)
-            print(queue_name2)
+            print(function.__name__)
             # try:
             #     message = self.client.receive_message(queue_name)
             # except Exception as err:
