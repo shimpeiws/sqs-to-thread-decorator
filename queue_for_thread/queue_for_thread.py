@@ -18,6 +18,16 @@ class QueueForThread:
         self.aws_secret_access_key = options.get('aws_secret_access_key', '')
         self.region_name = options.get('region_name', '')
         self.endpoint_url = options.get('endpoint_url', '')
+        try:
+            self.client = Sqs(
+                aws_access_key_id=self.aws_access_key_id,
+                aws_secret_access_key=self.aws_secret_access_key,
+                region_name=self.region_name,
+                endpoint_url=self.endpoint_url
+            )
+        except Exception as err:
+            self.logger.error('Error when init SQS client')
+            raise self.SqsException(err)
 
     def __init_logger(self):
         logger = logging.getLogger(__name__)
@@ -47,19 +57,10 @@ class QueueForThread:
 
     def execute(self, queue_name):
         values = self.functions[queue_name]
-        try:
-            client = Sqs(
-                aws_access_key_id=self.aws_access_key_id,
-                aws_secret_access_key=self.aws_secret_access_key,
-                region_name=self.region_name,
-                endpoint_url=self.endpoint_url
-            )
-        except Exception as err:
-            self.logger.error('Error when init SQS client')
-            raise self.SqsException(err)
+
         while True:
             try:
-                message = client.receive_message(queue_name)
+                message = self.client.receive_message(queue_name)
             except Exception as err:
                 self.logger.error(
                     'Error when receive message from SQS Queue = [%s]', queue_name)
