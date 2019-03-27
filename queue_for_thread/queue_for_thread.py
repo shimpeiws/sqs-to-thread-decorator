@@ -85,5 +85,7 @@ class QueueForThread:
                     self.region_name for i in range(parallel_count)]
                 endpoint_url_arr = [
                     self.endpoint_url for i in range(parallel_count)]
+                polling_interval_arr = [
+                    self.polling_interval for i in range(parallel_count)]
                 executor.map(MethodExecutor.execute, key_arr,
-                             function_arr, aws_access_key_id_arr, aws_secret_access_key_arr, region_name_arr, endpoint_url_arr)
+                             function_arr, aws_access_key_id_arr, aws_secret_access_key_arr, region_name_arr, endpoint_url_arr, polling_interval_arr)
