@@ -56,6 +56,9 @@ class QueueForThread:
             return function
         return decorator
 
+    def execute2(self):
+        print("execute2")
+
     def options(self):
         return {
             'polling_interval': self.polling_interval,
@@ -82,4 +85,4 @@ class QueueForThread:
                 # option_arr = [
                 #     self.options() for i in range(parallel_count)]
 
-                executor.map(MethodExecutor.execute2)
+                executor.map(self.execute2)
