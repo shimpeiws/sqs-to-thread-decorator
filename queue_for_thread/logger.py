@@ -3,7 +3,7 @@ from logging import getLogger, StreamHandler, Formatter, INFO
 
 class Logger:
     def __init__(self, **options):
-        logger = logging.getLogger(__name__)
+        logger = getLogger(__name__)
         logger.setLevel(options.get('log_level', INFO))
         stream_handler = StreamHandler()
         stream_handler.setLevel(self.log_level)
