@@ -6,6 +6,10 @@ import logging
 from logging import getLogger, StreamHandler, Formatter
 
 
+def execute2():
+    print("execute2")
+
+
 class QueueForThread:
     class SqsException(Exception):
         pass
@@ -56,9 +60,6 @@ class QueueForThread:
             return function
         return decorator
 
-    def execute2(self):
-        print("execute2")
-
     def options(self):
         return {
             'polling_interval': self.polling_interval,
@@ -85,4 +86,4 @@ class QueueForThread:
                 # option_arr = [
                 #     self.options() for i in range(parallel_count)]
 
-                executor.map(self.execute2)
+                executor.map(execute2)
