@@ -2,6 +2,7 @@ import time
 from concurrent.futures import ProcessPoolExecutor
 from .sqs import Sqs
 from .method_executor import MethodExecutor
+from logging import INFO
 
 
 class QueueForThread:
@@ -10,7 +11,7 @@ class QueueForThread:
 
     def __init__(self, **options):
         self.functions = {}
-        log_level = options.get('log_level', logging.INFO)
+        log_level = options.get('log_level', INFO)
         self.logger = Logger(log_level=log_level)
         self.polling_interval = options.get('polling_interval', 3)
         self.aws_access_key_id = options.get('aws_access_key_id', '')
