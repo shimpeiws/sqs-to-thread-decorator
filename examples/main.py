@@ -9,7 +9,8 @@ import random
 #     aws_secret_access_key="AWS_ACCESS_KEY_ID",
 #     region_name="REGION_NAME",
 #     endpoint_url="ENDPOINT_URL",
-#     polling_interval=1
+#     polling_interval=1,
+#     log_level=logging.ERROR,
 # )
 app = QueueForThread()
 
