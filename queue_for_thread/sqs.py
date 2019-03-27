@@ -25,7 +25,7 @@ class Sqs():
 
     def create_queue(self, queue_name):
         return self.sqs.create_queue(
-          QueueName=queue_name
+            QueueName=queue_name
         )
 
     def fetch_queue(self, queue_name):
@@ -39,8 +39,8 @@ class Sqs():
     def receive_message(self, queue_name):
         queue = self.fetch_queue(queue_name)
         with self.lock:
-            r = queue.receive_messages(MaxNumberOfMessages=1)
-            if len(r) == 0:
+          r = queue.receive_messages(MaxNumberOfMessages=1)
+           if len(r) == 0:
                 return None
             else:
                 message = r[0]
