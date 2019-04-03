@@ -31,8 +31,8 @@ class MethodExecutor:
                 logger.info(
                     'Got message [%s] from Queue Name = [%s]', message, queue_name)
                 try:
-                    # function(sqs_message=message,
-                            #  res_before_action=res_before_action)
+                    function(sqs_message=message,
+                             res_before_action=res_before_action)
                 except Exception as err:
                     print('exepction')
                     logger.exception('Error in decorated function')
