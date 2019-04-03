@@ -1,6 +1,5 @@
 from queue_for_thread import QueueForThread
 import time
-import datetime
 import random
 
 # Init QueueForThread
@@ -18,7 +17,7 @@ app = QueueForThread()
 
 def before_action():
     print('!!!this is before action!!!')
-    return {"foo": 'bar'}
+    return {"foo": random.randrange(100)}
 
 
 ba = before_action
