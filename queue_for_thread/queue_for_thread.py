@@ -33,9 +33,11 @@ class QueueForThread:
 
     def add_function(self, queue_name, function, **options):
         parallel_count = options.get('parallel_count', 1)
+        before_action = options.get('before_action', None)
         self.functions[queue_name] = {
             'parallel_count': parallel_count,
-            'function': function
+            'function': function,
+            'before_action': before_action
         }
 
     def listen(self, queue_name, **options):
@@ -67,6 +69,8 @@ class QueueForThread:
                     key for i in range(parallel_count)]
                 function_arr = [
                     values['function'] for i in range(parallel_count)]
+                before_action_arr = [
+                    values['before_action'] for i in range(parallel_count)]
                 aws_access_key_id_arr = [
                     self.aws_access_key_id for i in range(parallel_count)]
                 aws_secret_access_key_arr = [
@@ -80,6 +84,6 @@ class QueueForThread:
                 log_level_arr = [
                     self.log_level for i in range(parallel_count)]
                 executor.map(MethodExecutor.execute, key_arr,
-                             function_arr, aws_access_key_id_arr,
+                             function_arr, before_action_arr, aws_access_key_id_arr,
                              aws_secret_access_key_arr, region_name_arr,
                              endpoint_url_arr, polling_interval_arr, log_level_arr)
