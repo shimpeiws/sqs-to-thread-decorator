@@ -17,9 +17,8 @@ class MethodExecutor:
         )
         l = Logger(log_level=log_level)
         logger = l.get_logger()
+        print(before_action)
         res_before_action = None if before_action is None else before_action()
-        logger.info("res_before_action")
-        print(res_before_action)
         while True:
             try:
                 message = client.receive_message(queue_name)
