@@ -44,7 +44,7 @@ class Sqs():
                 return None
             else:
                 message = r[0]
-                message.set_attributes(
-                    VisibilityTimeout=60
-                )
+                # message.set_attributes(
+                #     VisibilityTimeout=60
+                # )
                 return message
