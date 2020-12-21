@@ -44,9 +44,7 @@ class Sqs():
                 return None
             else:
                 message = r[0]
-                receipt_handle = message['ReceiptHandle']
-                self.sqs.change_message_visibility(
-                    ReceiptHandle=receipt_handle,
+                message.set_attributes(
                     VisibilityTimeout=60
                 )
                 return message
