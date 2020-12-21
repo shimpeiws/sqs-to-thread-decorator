@@ -21,16 +21,18 @@ class MethodExecutor:
         while True:
             try:
                 message = client.receive_message(queue_name)
+                body = message.body
             except Exception as err:
                 logger.error(
                     'Error when receive message from SQS Queue = [%s]', queue_name)
                 raise self.SqsException(err)
-            if message is not None:
+            if body is not None:
                 logger.info(
-                    'Got message [%s] from Queue Name = [%s]', message, queue_name)
+                    'Got message [%s] from Queue Name = [%s]', body, queue_name)
                 try:
-                    function(sqs_message=message,
+                    function(sqs_message=body,
                              res_before_action=res_before_action)
+                    message.delete()
                 except Exception as err:
                     print('exepction')
                     logger.exception('Error in decorated function')
