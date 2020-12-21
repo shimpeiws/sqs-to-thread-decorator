@@ -39,12 +39,9 @@ class Sqs():
     def receive_message(self, queue_name):
         queue = self.fetch_queue(queue_name)
         with self.lock:
-            r = queue.receive_messages(MaxNumberOfMessages=1)
+            r = queue.receive_messages(MaxNumberOfMessages=1, VisibilityTimeout=60)
             if len(r) == 0:
                 return None
             else:
                 message = r[0]
-                # message.set_attributes(
-                #     VisibilityTimeout=60
-                # )
                 return message
