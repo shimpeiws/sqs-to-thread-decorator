@@ -39,7 +39,7 @@ class Sqs():
     def receive_message(self, queue_name):
         queue = self.fetch_queue(queue_name)
         with self.lock:
-            r = queue.receive_messages(MaxNumberOfMessages=1, VisibilityTimeout=60)
+            r = queue.receive_messages(MaxNumberOfMessages=1, VisibilityTimeout=10)
             if len(r) == 0:
                 return None
             else:
